@@ -12,7 +12,7 @@ const route = require('./route/routes');
 // connect to mongodb
 // mongoose.connect('mongodb://localhost:27017/shoppinglist');
 
-const dbPath = "mongodb+srv://baqer:iggy5R1y8urUhxts@cluster0-2wlh3.mongodb.net/main-letter-competetion?retryWrites=true&w=majority";
+const dbPath = "mongodb+srv://baqer:iggy5R1y8urUhxts@cluster0-2wlh3.mongodb.net/main2020-letter-competition?retryWrites=true&w=majority";
 mongoose
   .connect(dbPath, {
     useUnifiedTopology: true,
@@ -32,6 +32,10 @@ mongoose
 
 app.use(cors());
 app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({
+  extended: true
+}));
+
 app.use('/api', route);
 
 
@@ -47,13 +51,13 @@ const PORT = process.env.PORT || 8080;
     
 
     // production 
-    if(process.env.NODE_ENV === 'production') {
+    // if(process.env.NODE_ENV === 'production') {
       app.use(express.static(path.join(__dirname, 'public')));
       app.get('*', (req, res) => {
         // res.sendFile(path.join(__dirname, 'public/index.html'));
          res.sendFile(path.join(__dirname, 'public',  'index.html'));
         });
-    }
+    // }
 
     
 

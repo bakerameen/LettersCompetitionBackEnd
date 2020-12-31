@@ -1,36 +1,45 @@
-const { json } = require('body-parser');
+
 const express = require('express');
 const router = express.Router();
 
-const Item = require('../model/shoppingItem');
+
+const Team = require('../models/teams');
 
 // post data
+
 router.post('/teams', (req, res, next) => {
-    const team = req.body;
+    const team = new Team({
+        name: req.body.name,
+        description: req.body.description
+    }); 
     console.log(team);
-    res.status(201).json({
+        team.save();   
+        res.status(201).json({
         message: 'team added successfully'
     });
 });
 
 // retrive or get data
 router.get('/teams', (req, res, next) => {
-    const teams = [
-        {
-            id: "eretert123",
-            name: "Proffessional Services",
-            description: "We are First"
-        },
-        {
-            id: "eretert456",
-            name: "KAM",
-            description: "We are Second"
-        },
-    ];
-    res.status(200).json({
-        message: 'teams featched successfully!',
-        teams: teams
+    Team.find().then(documents => {        
+        res.status(200).json({
+            message: 'teams featched successfully!',
+            teams: documents       
+        });
     });
+    // const teams = [
+    //     {
+            
+    //         name: "Proffessional Services",
+    //         description: "We are First"
+    //     },
+    //     {
+            
+    //         name: "KAM",
+    //         description: "We are Second"
+    //     },
+    // ];
+   
 
 });
 
