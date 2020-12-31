@@ -12,7 +12,7 @@ const route = require('./route/routes');
 // connect to mongodb
 // mongoose.connect('mongodb://localhost:27017/shoppinglist');
 
-const dbPath = "mongodb+srv://baqer:iggy5R1y8urUhxts@cluster0-2wlh3.mongodb.net/main-Naseej-letter-competetion?retryWrites=true&w=majority";
+const dbPath = "mongodb+srv://baqer:iggy5R1y8urUhxts@cluster0-2wlh3.mongodb.net/main-letter-competetion?retryWrites=true&w=majority";
 mongoose
   .connect(dbPath, {
     useUnifiedTopology: true,
