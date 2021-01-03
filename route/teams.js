@@ -6,7 +6,7 @@ const router = express.Router();
 const Team = require('../models/teams');
 
 // post data
-router.post('/teams', (req, res, next) => {
+router.post('', (req, res, next) => {
     const team = new Team({
         name: req.body.name,
         description: req.body.description
@@ -21,7 +21,7 @@ router.post('/teams', (req, res, next) => {
 });
 
 // retrive or get data
-router.get('/teams', (req, res, next) => {
+router.get('', (req, res, next) => {
     Team.find().then(documents => {        
         res.status(200).json({
             message: 'teams featched successfully!',
@@ -44,7 +44,7 @@ router.get('/teams', (req, res, next) => {
 });
 
 // delete data
-router.delete('/teams/:id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
    Team.deleteOne({_id: req.params.id}).then((result) => {   
        console.log(result);
     res.status(200).json({

@@ -7,7 +7,7 @@ var path = require('path');
 
 const app = express();
 
-const route = require('./route/routes');
+const teamsRoutes = require('./route/teams');
 
 // connect to mongodb
 // mongoose.connect('mongodb://localhost:27017/shoppinglist');
@@ -36,7 +36,7 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 
-app.use('/api', route);
+app.use('/api/teams', teamsRoutes);
 
 
 
