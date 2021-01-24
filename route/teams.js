@@ -4,9 +4,11 @@ const router = express.Router();
 
 
 const Team = require('../models/teams');
+const checkAuth = require('../middleware/check-auth');
 
 // post data
-router.post('', (req, res, next) => {
+router.post('', checkAuth,  (req, res, next) => {
+    console.log('enter');
     const team = new Team({
         name: req.body.name,
         description: req.body.description
@@ -21,30 +23,17 @@ router.post('', (req, res, next) => {
 });
 
 // retrive or get data
-router.get('', (req, res, next) => {
+router.get('', checkAuth,  (req, res, next) => {
     Team.find().then(documents => {        
         res.status(200).json({
             message: 'teams featched successfully!',
             teams: documents       
         });
     });
-    // const teams = [
-    //     {
-            
-    //         name: "Proffessional Services",
-    //         description: "We are First"
-    //     },
-    //     {
-            
-    //         name: "KAM",
-    //         description: "We are Second"
-    //     },
-    // ];  
-
 });
 
 // delete data
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkAuth, (req, res, next) => {
    Team.deleteOne({_id: req.params.id}).then((result) => {   
        console.log(result);
     res.status(200).json({
@@ -55,6 +44,33 @@ router.delete('/:id', (req, res, next) => {
  
 });
 
+// update data
+router.put('/:id', checkAuth, (req, res, next) => {
+    const team = new Team({
+        _id: req.body.id,
+        name: req.body.name,
+        description: req.body.description
+    });
+    Team.updateOne({_id: req.params.id}, team).then( result => {
+        console.log(result);
+        res.status(200).json({message: 'team updatated successfully!'})
+    });
+})
+
+// update single team
+
+router.get('/:id', checkAuth,  (req, res, next) => {
+    Team.findById(req.params.id).then(team => {
+        if (team) {
+            res.status(200).json(team);
+            console.log(team);
+
+        } else {
+            res.status(400).json({message: 'Team not found'});
+        }
+    })
+    ;
+});
 
 module.exports = router;
 

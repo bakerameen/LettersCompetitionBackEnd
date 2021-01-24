@@ -8,6 +8,7 @@ var path = require('path');
 const app = express();
 
 const teamsRoutes = require('./route/teams');
+const userRoutes = require('./route/user');
 
 // connect to mongodb
 // mongoose.connect('mongodb://localhost:27017/shoppinglist');
@@ -36,7 +37,21 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, DELETE, OPTIONS"
+  );
+  next();
+});
+
 app.use('/api/teams', teamsRoutes);
+app.use('/api/user', userRoutes);
 
 
 
