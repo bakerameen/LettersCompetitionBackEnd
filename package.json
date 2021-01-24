@@ -4,16 +4,16 @@
   "description": "Naseej letter Competition backend server",
   "main": "server.js",
   "start": "server.js",
-  "engines": { 
-    "node": "12.16.1" 
- },
+  "engines": {
+    "node": "12.16.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Baqer Abbas",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
