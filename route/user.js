@@ -15,8 +15,9 @@ router.post('/signup', (req, res, next) => {
         .then(hash => {
             const user = new User({
                 email: req.body.email,
-                password: hash
-            });
+                password: hash,
+                name: req.body.name
+            });         
             user.save()
                 .then(result => {
                     res.status(201).json({
@@ -25,8 +26,8 @@ router.post('/signup', (req, res, next) => {
                     });
                 })
                 .catch(err => {
-                    res.status(500).json({
-                        error: err
+                    res.status(500).json({                      
+                            message: 'invalid authentication credentials!'                        
                     })
                 });
             ;
@@ -43,28 +44,33 @@ router.post('/login', (req, res, next) => {
                 });
             }
             fetchedUser = user;
+           // console.log('fetchedUser' + fetchedUser._id);
             return bcrypt.compare(req.body.password, user.password);
         })
         .then(result => {
+            console.log('result' + result);
             if (!result) {
                 return res.status(401).json({
                     message: 'Auth Failed!'
                 });
-            }
+            }           
             // create new token
             const token = jwt.sign(
                 { email: fetchedUser.email, userID: fetchedUser._id }, 'secret_this_should_be_longer', { expiresIn: "1h" }
             );
+            
             res.status(200).json({
                 token: token,
-                expiresIn: 3600
+                expiresIn: 3600,
+                userID: fetchedUser._id,
+                name: fetchedUser.name
             });
 
         })
         .catch(err => {
             console.log(err);
             return res.status(401).json({
-                message: 'Auth Failed!'
+                message: 'invalid authentication credentials!'
             });
         });
 });
