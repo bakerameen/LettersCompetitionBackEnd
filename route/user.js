@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require("../models/user");
-
+const checkAuth = require('../middleware/check-auth');
 
 
 const router = express.Router();
@@ -16,18 +16,18 @@ router.post('/signup', (req, res, next) => {
             const user = new User({
                 email: req.body.email,
                 password: hash,
-                name: req.body.name
-            });         
+                name: req.body.name                
+            });
             user.save()
-                .then(result => {
+                .then(result => {                   
                     res.status(201).json({
                         message: 'user created!!',
                         result: result
                     });
                 })
                 .catch(err => {
-                    res.status(500).json({                      
-                            message: 'invalid authentication credentials!'                        
+                    res.status(500).json({
+                        message: 'invalid authentication credentials!'
                     })
                 });
             ;
@@ -44,7 +44,7 @@ router.post('/login', (req, res, next) => {
                 });
             }
             fetchedUser = user;
-           // console.log('fetchedUser' + fetchedUser._id);
+            // console.log('fetchedUser' + fetchedUser._id);
             return bcrypt.compare(req.body.password, user.password);
         })
         .then(result => {
@@ -53,12 +53,12 @@ router.post('/login', (req, res, next) => {
                 return res.status(401).json({
                     message: 'Auth Failed!'
                 });
-            }           
+            }
             // create new token
             const token = jwt.sign(
                 { email: fetchedUser.email, userID: fetchedUser._id }, 'secret_this_should_be_longer', { expiresIn: "1h" }
             );
-            
+
             res.status(200).json({
                 token: token,
                 expiresIn: 3600,
@@ -74,5 +74,14 @@ router.post('/login', (req, res, next) => {
             });
         });
 });
+
+router.get('/users', checkAuth, (req, res, next) => {
+    User.find().then(users => {        
+        res.status(200).json({
+          message: 'teams fetched Successfully',
+          users: users
+        });    
+      })
+} )
 
 module.exports = router;

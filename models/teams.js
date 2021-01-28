@@ -16,7 +16,10 @@ const {Schema} = require('mongoose');
 
 const teamSchema = new Schema({
    name: {type: String, required: true},
-   description: String
+   description: {type: String},
+   fPlayer: {type: String},
+   sPlayer: {type: String},
+   score: {type: String}
 });
 
 module.exports = mongoose.model('Team', teamSchema);

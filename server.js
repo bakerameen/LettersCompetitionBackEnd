@@ -9,6 +9,7 @@ const app = express();
 
 const teamsRoutes = require('./route/teams');
 const userRoutes = require('./route/user');
+const matchRoutes = require('./route/match');
 
 // connect to mongodb
 // mongoose.connect('mongodb://localhost:27017/shoppinglist');
@@ -52,6 +53,8 @@ app.use((req, res, next) => {
 
 app.use('/api/teams', teamsRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/match', matchRoutes);
+
 
 
 

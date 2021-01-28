@@ -6,14 +6,18 @@ const router = express.Router();
 const Team = require('../models/teams');
 const checkAuth = require('../middleware/check-auth');
 
+console.log('test 2020');
 // post data
-router.post('', checkAuth,  (req, res, next) => {
-    console.log('enter');
+router.post('', checkAuth,  (req, res, next) => {    
     const team = new Team({
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        fPlayer: req.body.fPlayer,
+        sPlayer: req.body.sPlayer,
+        score: req.body.score
     });     
         team.save().then(createdTeam => {
+            console.log(createdTeam)
             res.status(201).json({
                 message: 'team added successfully',
                 teamId: createdTeam._id
@@ -82,7 +86,7 @@ router.put('/:id', checkAuth, (req, res, next) => {
     ;
 })
 
-// update single team
+// get single team
 
 router.get('/:id', checkAuth,  (req, res, next) => {
     Team.findById(req.params.id).then(team => {
@@ -101,6 +105,29 @@ router.get('/:id', checkAuth,  (req, res, next) => {
     })
     ;
 });
+
+// add players 
+router.put('/players/:id', checkAuth, (req, res, next) => {     
+    const team = new Team({
+        _id: req.body.id,
+        name: req.body.name,
+        description: req.body.description,
+        fPlayer: req.body.fPlayer,
+        sPlayer: req.body.sPlayer,
+        score: req.body.score  
+    });
+    Team.updateOne({_id: req.params.id}, team).then( result => {      
+        res.status(200).json({
+            message: 'players added successfully!'         
+        })
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Couldn't add players"
+        })
+    })
+    ;
+})
 
 module.exports = router;
 
