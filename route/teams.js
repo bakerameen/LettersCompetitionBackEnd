@@ -8,7 +8,8 @@ const checkAuth = require('../middleware/check-auth');
 
 console.log('test 2020');
 // post data
-router.post('', checkAuth,  (req, res, next) => {    
+router.post('', checkAuth,  (req, res, next) => {  
+    console.log(req.body.name)  ;
     const team = new Team({
         name: req.body.name,
         description: req.body.description,
