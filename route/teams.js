@@ -6,10 +6,10 @@ const router = express.Router();
 const Team = require('../models/teams');
 const checkAuth = require('../middleware/check-auth');
 
-console.log('test 2020');
+
 // post data
 router.post('', checkAuth,  (req, res, next) => {  
-    console.log(req.body.name)  ;
+
     const team = new Team({
         name: req.body.name,
         description: req.body.description,
@@ -18,7 +18,7 @@ router.post('', checkAuth,  (req, res, next) => {
         score: req.body.score
     });     
         team.save().then(createdTeam => {
-            console.log(createdTeam)
+    
             res.status(201).json({
                 message: 'team added successfully',
                 teamId: createdTeam._id
@@ -53,7 +53,7 @@ router.get('', checkAuth,  (req, res, next) => {
 // delete data
 router.delete('/:id', checkAuth, (req, res, next) => {
    Team.deleteOne({_id: req.params.id}).then((result) => {   
-       console.log(result);
+  
     res.status(200).json({
         message: 'item wad deleted'
     });
@@ -76,7 +76,7 @@ router.put('/:id', checkAuth, (req, res, next) => {
         description: req.body.description
     });
     Team.updateOne({_id: req.params.id}, team).then( result => {
-        console.log(result);
+   
         res.status(200).json({message: 'team updatated successfully!'})
     })
     .catch(error => {
@@ -93,7 +93,7 @@ router.get('/:id', checkAuth,  (req, res, next) => {
     Team.findById(req.params.id).then(team => {
         if (team) {
             res.status(200).json(team);
-            console.log(team);
+       
 
         } else {
             res.status(400).json({message: 'Team not found'});

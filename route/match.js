@@ -52,6 +52,29 @@ router.post('', checkAuth, (req, res, next) => {
 })
 
 
+// Add Answer
+router.post('/answered',  (req, res, next) => {  
+    const answer = new Answer({
+        userName: req.body.userName,
+        userCliceked: req.body.userCliceked        
+    });
+  
+    // answer.save().then(createdAnswer=> {
+        res.status(200).json({
+            message: 'answer clicked!',
+            userCliceked: createdMatch.userCliceked,
+            userName: createdAnswer.userName
+        })
+    // })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                message: "Can't create answer!",
+            })
+        })
+})
+
+
 module.exports = router;
 
 

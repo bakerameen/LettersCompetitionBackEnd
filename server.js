@@ -10,6 +10,7 @@ const app = express();
 const teamsRoutes = require('./route/teams');
 const userRoutes = require('./route/user');
 const matchRoutes = require('./route/match');
+const answerRoutes = require('./route/answer');
 
 // connect to mongodb
 // mongoose.connect('mongodb://localhost:27017/shoppinglist');
@@ -54,9 +55,7 @@ app.use((req, res, next) => {
 app.use('/api/teams', teamsRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/match', matchRoutes);
-
-
-
+app.use('/api/answer', answerRoutes);
 
 
 const PORT = process.env.PORT || 8080;
