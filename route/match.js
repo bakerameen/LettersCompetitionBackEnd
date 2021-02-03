@@ -15,7 +15,7 @@ router.get('', (req, res, next) => {
                 message: 'matches fetched successfully!',
                 matches: documents
             })
-            console.log(documents)
+           
         })
         
         .catch(error => {
@@ -49,6 +49,25 @@ router.post('', checkAuth, (req, res, next) => {
                 message: "Can't craete match!",
             })
         })
+})
+
+// update match score
+router.put('/:id',  (req, res, next) => {
+    const match = new Match({
+        _id: req.body.matchId,        
+        score: req.body.score
+    });
+
+    Match.updateOne({_id: req.params.id}, match).then( result => {
+   
+        res.status(200).json({message: 'score updated successfully!'})
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Couldn't update a score!"
+        })
+    })
+    ;
 })
 
 
