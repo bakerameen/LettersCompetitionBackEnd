@@ -8,7 +8,7 @@ const checkAuth = require('../middleware/check-auth');
 
 // Get matches
 
-router.get('', (req, res, next) => {
+router.get('', checkAuth, (req, res, next) => {
     Match.find().sort({"_id": -1})
         .then(documents => {
             res.status(200).json({
@@ -52,7 +52,7 @@ router.post('', checkAuth, (req, res, next) => {
 })
 
 // update match score
-router.put('/:id',  (req, res, next) => {
+router.put('/:id', checkAuth,  (req, res, next) => {
     const match = new Match({
         _id: req.body.matchId,        
         score: req.body.score
@@ -72,7 +72,7 @@ router.put('/:id',  (req, res, next) => {
 
 
 // Add Answer
-router.post('/answered',  (req, res, next) => {  
+router.post('/answered', checkAuth,  (req, res, next) => {  
     const answer = new Answer({
         userName: req.body.userName,
         userCliceked: req.body.userCliceked        
