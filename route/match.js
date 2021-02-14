@@ -51,23 +51,34 @@ router.post('', checkAuth, (req, res, next) => {
         })
 })
 
-// update match score
+// update match score  teamId: teamId, description:description, fPlayer: fPlayer, sPlayer: sPlayer, teamName: teamName
 router.put('/:id', checkAuth,  (req, res, next) => {
     const match = new Match({
-        _id: req.body.matchId,        
-        score: req.body.score
+        _id: req.body.id,        
+        score: req.body.score,
+        teamId: req.body.teamId,
+        description: req.body.description,
+        fPlayer: req.body.fPlayer,
+        sPlayer: req.body.sPlayer,
+        teamName: req.body.teamName 
     });
 
+    console.log(match);
+
     Match.updateOne({_id: req.params.id}, match).then( result => {
-   
-        res.status(200).json({message: 'score updated successfully!'})
+   console.log(match);
+        res.status(200).json({
+            message: 'score updated successfully!',
+            match: match
+        })
     })
     .catch(error => {
         res.status(500).json({
-            message: "Couldn't update a score!"
+            message: "Couldn't update a score!"          
         })
     })
-    ;
+     ;
+
 })
 
 
