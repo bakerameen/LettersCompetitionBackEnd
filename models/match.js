@@ -7,6 +7,8 @@ const matchSchema = new Schema({
    description: {type: String},
    fPlayer: {type: String},
    sPlayer: {type: String},
+   tPlayer: {type: String},
+   foPlayer: {type: String},
    score: {type: String}
 });
 

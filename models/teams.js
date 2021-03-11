@@ -19,7 +19,10 @@ const teamSchema = new Schema({
    description: {type: String},
    fPlayer: {type: String},
    sPlayer: {type: String},
+   tPlayer: {type: String},
+   foPlayer: {type: String},
    score: {type: Number}
 });
 
 module.exports = mongoose.model('Team', teamSchema);
+

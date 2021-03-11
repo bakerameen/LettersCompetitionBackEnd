@@ -15,6 +15,8 @@ router.post('', checkAuth,  (req, res, next) => {
         description: req.body.description,
         fPlayer: req.body.fPlayer,
         sPlayer: req.body.sPlayer,
+        tPlayer: req.body.tPlayer,
+        foPlayer: req.body.foPlayer,
         score: req.body.score
     });     
         team.save().then(createdTeam => {
@@ -115,6 +117,8 @@ router.put('/players/:id', checkAuth, (req, res, next) => {
         description: req.body.description,
         fPlayer: req.body.fPlayer,
         sPlayer: req.body.sPlayer,
+        tPlayer: req.body.tPlayer,
+        foPlayer: req.body.foPlayer,
         score: req.body.score  
     });
     Team.updateOne({_id: req.params.id}, team).then( result => {      

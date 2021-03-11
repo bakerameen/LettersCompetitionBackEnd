@@ -85,7 +85,7 @@ router.put('/:id', (req, res, next) => {
     
     Answer.find({}, ['userCliceked', 'userName'], function (err, docs) {
         docs.map(doc => {
-            // console.log(doc.userName);
+         
             const clicked = doc.userCliceked;
             const answerName = doc.userName;
             if (clicked === false) {

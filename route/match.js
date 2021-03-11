@@ -34,6 +34,8 @@ router.post('', checkAuth, (req, res, next) => {
         description: req.body.description,
         fPlayer: req.body.fPlayer,
         sPlayer: req.body.sPlayer,
+        tPlayer: req.body.tPlayer,
+        foPlayer: req.body.foPlayer,
         score: req.body.score
     });
   
@@ -44,7 +46,7 @@ router.post('', checkAuth, (req, res, next) => {
         })
     })
         .catch(error => {
-            console.log(error);
+           //  console.log(error);
             res.status(500).json({
                 message: "Can't craete match!",
             })
@@ -60,13 +62,15 @@ router.put('/:id', checkAuth,  (req, res, next) => {
         description: req.body.description,
         fPlayer: req.body.fPlayer,
         sPlayer: req.body.sPlayer,
+        tPlayer: req.body.tPlayer,
+        foPlayer:req.body.foPlayer,
         teamName: req.body.teamName 
     });
 
-    console.log(match);
+    // console.log(match);
 
     Match.updateOne({_id: req.params.id}, match).then( result => {
-   console.log(match);
+   // console.log(match);
         res.status(200).json({
             message: 'score updated successfully!',
             match: match
@@ -97,7 +101,7 @@ router.post('/answered', checkAuth,  (req, res, next) => {
         })
     // })
         .catch(error => {
-            console.log(error);
+           // console.log(error);
             res.status(500).json({
                 message: "Can't create answer!",
             })

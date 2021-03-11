@@ -5,8 +5,7 @@ const router = express.Router();
 const Board = require('../models/board');
 const checkAuth = require('../middleware/check-auth');
 
-router.post('', checkAuth, (req, res, next) => {
-    console.log(req.body);
+router.post('', checkAuth, (req, res, next) => {   
      const board = new Board({
          letter: req.body.letter,
          color: req.body.color,
@@ -65,11 +64,10 @@ router.put('/:id', checkAuth, (req, res, next) => {
 })
 
 // update data
-router.put('', checkAuth, (req, res, next) => {
-    console.log(req.body.color)
+router.put('', checkAuth, (req, res, next) => {    
     Board.updateMany({color: ['green', 'red']},  
         {color:"#bebebe"}, function (err, docs) { 
-            console.log(docs);
+           
         if (err){ 
             res.status(500).json({
                 message: "Couldn't update a board item!",
@@ -78,7 +76,7 @@ router.put('', checkAuth, (req, res, next) => {
         } 
         else{ 
             res.status(200).json({message: 'board Item updatated successfully!'})
-            console.log("Updated Docs : ", docs); 
+           
         } 
     }); 
 
