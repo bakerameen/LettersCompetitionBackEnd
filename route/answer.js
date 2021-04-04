@@ -12,7 +12,8 @@ const checkAuth = require('../middleware/check-auth');
 router.post('', checkAuth, (req, res, next) => {
     const answer = new Answer({
         userName: req.body.userName,
-        userCliceked: req.body.userCliceked
+        userCliceked: req.body.userCliceked,
+        timerClass : req.body.timerClass
     });
 
     answer.save().then(createdAnswer => {
@@ -38,7 +39,9 @@ router.get('', (req, res, next) => {
 
         res.status(200).json({
             message: 'Answers featched successfully!',
-            answer: documents
+            answer: documents,
+            clicked: documents.userCliceked
+
         });
     })
         .catch(error => {
@@ -52,12 +55,14 @@ router.get('', (req, res, next) => {
 // update answer clicked info
 
 router.put('/admin/:id', (req, res, next) => {
+    
     const answer = new Answer({
         _id: req.body._id,
         userName: req.body.userName,
-        userCliceked: req.body.userCliceked
+        userCliceked: req.body.userCliceked,
+        timerClass : req.body.timerClass
     })
-
+    console.log(answer);
     Answer.updateOne({ _id: req.params.id }, answer).then(result => {
         res.status(200).json({
             message: 'answer Released successfully!',
@@ -80,19 +85,21 @@ router.put('/:id', (req, res, next) => {
     const answer = new Answer({
         _id: req.body._id,
         userName: req.body.userName,
-        userCliceked: req.body.userCliceked
+        userCliceked: req.body.userCliceked,
+        timerClass : req.body.timerClass
     });
-    
-    Answer.find({}, ['userCliceked', 'userName'], function (err, docs) {
+     
+    Answer.find({}, ['userCliceked', 'userName', 'timerClass'], function (err, docs) {
         docs.map(doc => {
-         
+         console.log(doc);
             const clicked = doc.userCliceked;
             const answerName = doc.userName;
             if (clicked === false) {
-                Answer.updateOne({ _id: req.params.id }, answer).then(result => {
-                   
+                Answer.updateOne({ _id: req.params.id }, answer).then(result => {                   
                     res.status(200).json({
-                        message: 'answer clicked successfully!'                       
+                        message: 'answer clicked successfully!',
+                        class: doc.timerClass,
+                        userCliceked: doc.userCliceked                                            
                     })
                 })
                     .catch(error => {

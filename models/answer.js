@@ -3,7 +3,8 @@ const {Schema} = require('mongoose');
 
 const answerSchema = new Schema({
     userName: {type: String},
-    userCliceked: {type: Boolean}
+    userCliceked: {type: Boolean},
+    timerClass : {type: String}
   
 });
 
